@@ -6,7 +6,8 @@ const List = () => {
   const handleInput = (e) => {
     setInput(e.target.value);
     const newList = [];
-    for (let i = 0; i < 10000000; i++) {
+    for (let i = 0; i < 1000; i++) {
+      console.log(i);
       newList.push(e.target.value);
     }
     setList(newList);
