@@ -1,10 +1,12 @@
 import "./App.css";
 import List from "./components/List";
+import MemoExample from "./components/MemoExample";
 
 function App() {
   return (
     <>
-      <List />
+      {/*<List />*/}
+      <MemoExample />
     </>
   );
 }
