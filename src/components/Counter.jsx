@@ -16,7 +16,7 @@ const Counter = () => {
 };
 
 const ShowCount = ({ count = 0 }) => {
-  return <h1>Count: {count}</h1>;
+  return <h1>Here is Count: {count}</h1>;
 };
 
 export default Counter;
