@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 const Counter = () => {
   const [count, setCount] = useState(0);
   const [val, setVal] = useState("");
-  const increment = () => {
+  function abc() {}
+
+  useEffect(() => {
+    abc();
+  }, []);
+  const increment = useCallback(() => {
     setCount((prevCount) => prevCount + 1);
-  };
+  }, []);
   return (
     <div>
       <ShowCount count={count} increment={increment} />
