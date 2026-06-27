@@ -3,11 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 const Counter = () => {
   const [count, setCount] = useState(0);
   const [val, setVal] = useState("");
-  function abc() {}
 
-  useEffect(() => {
-    abc();
-  }, []);
   const increment = useCallback(() => {
     setCount((prevCount) => prevCount + 1);
   }, []);
