@@ -1,43 +1,54 @@
-import React from "react";
-import { useState } from "react";
+import React, { useReducer, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { TiTrash, TiTick } from "react-icons/ti";
 
+// Reducer
+const taskReducer = (state, action) => {
+  switch (action.type) {
+    case "ADD_TASK":
+      return [
+        ...state,
+        {
+          id: uuid(),
+          text: action.payload,
+          completed: false,
+        },
+      ];
+
+    case "REMOVE_TASK":
+      return state.filter((todo) => todo.id !== action.payload);
+
+    case "DONE_TASK":
+      return state.map((todo) =>
+        todo.id === action.payload
+          ? { ...todo, completed: !todo.completed }
+          : todo,
+      );
+
+    default:
+      return state;
+  }
+};
+
 function TodoList() {
   const [task, setTask] = useState("");
-  const [todos, setTodos] = useState([]);
+  const [todos, dispatch] = useReducer(taskReducer, []);
 
   // Add Task
   const addTask = () => {
     if (task.trim() === "") return;
 
-    const newTodo = {
-      id: uuid(),
-      text: task,
-      completed: false,
-    };
+    dispatch({
+      type: "ADD_TASK",
+      payload: task,
+    });
 
-    setTodos([...todos, newTodo]);
     setTask("");
-  };
-
-  // Delete Task
-  const deleteTask = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  };
-
-  // Toggle Complete
-  const toggleComplete = (id) => {
-    setTodos(
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo,
-      ),
-    );
   };
 
   return (
     <div style={{ padding: "20px", maxWidth: "400px", margin: "auto" }}>
-      <h2>Todo List</h2>
+      <h2>Todo List (useReducer)</h2>
 
       <input
         type="text"
@@ -70,11 +81,25 @@ function TodoList() {
             </span>
 
             <div>
-              <button onClick={() => toggleComplete(todo.id)}>
+              <button
+                onClick={() =>
+                  dispatch({
+                    type: "DONE_TASK",
+                    payload: todo.id,
+                  })
+                }
+              >
                 <TiTick />
               </button>
 
-              <button onClick={() => deleteTask(todo.id)}>
+              <button
+                onClick={() =>
+                  dispatch({
+                    type: "REMOVE_TASK",
+                    payload: todo.id,
+                  })
+                }
+              >
                 <TiTrash />
               </button>
             </div>
